@@ -14,6 +14,10 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "centos/7"
 
+  config.ssh.username = 'vagrant'
+  config.ssh.password = 'vagrant'
+  config.ssh.insert_key = 'true'
+  
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -23,7 +27,7 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # config.vm.network "forwarded_port", guest: 30000, host: 33333
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -32,18 +36,19 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
   # config.vm.network "public_network"
 
+  
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./data", "/home/vagrant"
+  config.vm.synced_folder "./data/", "/home/vagrant"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -67,12 +72,14 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
   yum update
   yum install -y git cmake gcc-c++ java-1.8.0-openjdk-devel systemtap systemtap-sdt-devel bison flex libtool ncurses-devel ant elfutils-libelf-devel rpm-build
+  yum install -y vim gdb gdb-gdbserver ctags
   
   rm -rf cubrid
-  git clone https://github.com/CUBRID/cubrid.git cubrid
-  cd cubrid
-  git clone https://github.com/CUBRID/cubrid-manager-server.git cubridmanager
+  git clone --recurse-submodules https://github.com/CUBRID/cubrid.git cubrid
+  chown -R vagrant cubrid
   
-  #   apt-get install -y apache2
+  git clone https://github.com/hgryoo/MyCentOSEnv myenv
+  chown -R vagrant myenv
+  
   SHELL
 end
