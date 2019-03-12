@@ -14,10 +14,8 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "centos/7"
 
-  config.ssh.username = 'vagrant'
-  config.ssh.password = 'vagrant'
-  config.ssh.insert_key = 'true'
-  
+  config.ssh.username = "vagrant"
+  config.ssh.insert_key = true
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -48,7 +46,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./data/", "/home/vagrant"
+  config.vm.synced_folder "./data/", "/vagrant", create: true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -70,16 +68,20 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-  yum update
-  yum install -y git cmake gcc-c++ java-1.8.0-openjdk-devel systemtap systemtap-sdt-devel bison flex libtool ncurses-devel ant elfutils-libelf-devel rpm-build
-  yum install -y vim gdb gdb-gdbserver ctags
-  
-  rm -rf cubrid
-  git clone --recurse-submodules https://github.com/CUBRID/cubrid.git cubrid
-  chown -R vagrant cubrid
-  
-  git clone https://github.com/hgryoo/MyCentOSEnv myenv
-  chown -R vagrant myenv
-  
+	cd /vagrant
+
+	yum update
+	yum install -y git cmake gcc-c++ java-1.8.0-openjdk-devel systemtap systemtap-sdt-devel bison flex libtool ncurses-devel ant elfutils-libelf-devel rpm-build
+	yum install -y vim gdb gdb-gdbserver ctags
+	  
+	if [ ! -d cubrid ]; then
+		git clone --recurse-submodules https://github.com/CUBRID/cubrid.git cubrid
+		chown -R vagrant cubrid
+	fi
+	  
+	if [ ! -d myenv ]; then
+		git clone https://github.com/hgryoo/MyCentOSEnv myenv
+		chown -R vagrant myenv
+	fi
   SHELL
 end
