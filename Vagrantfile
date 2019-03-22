@@ -77,7 +77,7 @@ Vagrant.configure("2") do |config|
 	# to build c++ 11
 	yum --enablerepo=extras install -y centos-release-scl
 	yum install -y devtoolset-7-gcc*
-	yum install -y cmake3
+	yum install -y epel-release cmake3
 	
 	cd /home/vagrant
 	mkdir bin
