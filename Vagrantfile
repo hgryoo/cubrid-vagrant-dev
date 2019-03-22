@@ -81,7 +81,7 @@ Vagrant.configure("2") do |config|
 	
 	cd /home/vagrant
 	mkdir bin
-	ln -s /home/vagrant/bin/cmake /usr/bin/cmake3
+	ln -sf /home/vagrant/bin/cmake /usr/bin/cmake3
 	echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
 	
 	cd /vagrant
