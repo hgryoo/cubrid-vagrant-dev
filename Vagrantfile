@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./data/", "/vagrant", create: true
+  config.vm.synced_folder "./data/", "/vagrant/data", create: true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -68,12 +68,24 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-	cd /vagrant
+	
 
 	yum update
 	yum install -y git cmake gcc-c++ java-1.8.0-openjdk-devel systemtap systemtap-sdt-devel bison flex libtool ncurses-devel ant elfutils-libelf-devel rpm-build
 	yum install -y vim gdb gdb-gdbserver ctags
-	  
+	
+	# to build c++ 11
+	yum --enablerepo=extras install -y centos-release-scl
+	yum install -y devtoolset-7-gcc*
+	yum install -y cmake3
+	
+	cd /home/vagrant
+	mkdir bin
+	ln -s /home/vagrant/bin/cmake /usr/bin/cmake3
+	echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
+	
+	cd /vagrant
+	
 	if [ ! -d cubrid ]; then
 		git clone --recurse-submodules https://github.com/CUBRID/cubrid.git cubrid
 		chown -R vagrant cubrid
