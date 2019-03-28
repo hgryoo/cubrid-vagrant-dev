@@ -76,19 +76,20 @@ Vagrant.configure("2") do |config|
 	
 	# to build c++ 11
 	yum --enablerepo=extras install -y centos-release-scl
-	yum install -y devtoolset-7-gcc*
+	yum install -y devtoolset-6-gcc*
 	yum install -y epel-release cmake3
 	
 	cd /home/vagrant
 	mkdir bin
-	ln -sf /home/vagrant/bin/cmake /usr/bin/cmake3
+	ln -sf /usr/bin/cmake3 /home/vagrant/bin/cmake
+	chown -R vagrant /home/vagrant/bin/cmake
 	echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
 	
 	cd /vagrant
 	
 	if [ ! -d cubrid ]; then
-		git clone --recurse-submodules https://github.com/CUBRID/cubrid.git cubrid
-		chown -R vagrant cubrid
+		git clone --recurse-submodules https://github.com/hgryoo/cubrid.git hgryoo_cubrid
+		chown -R vagrant hgryoo_cubrid
 	fi
 	  
 	if [ ! -d myenv ]; then
