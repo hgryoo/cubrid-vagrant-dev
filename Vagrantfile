@@ -71,19 +71,34 @@ Vagrant.configure("2") do |config|
 	
 
 	yum update
+	yum install -y wget
 	yum install -y git cmake gcc-c++ java-1.8.0-openjdk-devel systemtap systemtap-sdt-devel bison flex libtool ncurses-devel ant elfutils-libelf-devel rpm-build
 	yum install -y vim gdb gdb-gdbserver ctags
 	
 	# to build c++ 11
 	yum --enablerepo=extras install -y centos-release-scl
-	yum install -y devtoolset-6-gcc*
-	yum install -y epel-release cmake3
+	yum install -y devtoolset-6-gcc* epel-release
+	yum install -y cmake3
 	
 	cd /home/vagrant
 	mkdir bin
 	ln -sf /usr/bin/cmake3 /home/vagrant/bin/cmake
 	chown -R vagrant /home/vagrant/bin/cmake
 	echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
+	
+	# configure astyle
+	cd /home/vagrant
+	mkdir tmp
+	wget https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz astyle.tar.gz
+	tar -xzf astyle.tar.gz
+	cd astyle
+	cmake .
+	make
+	make install
+	
+	cd ~/.git/hooks
+	
+	
 	
 	cd /vagrant
 	
