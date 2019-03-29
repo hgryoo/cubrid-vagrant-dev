@@ -69,7 +69,6 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
 	
-
 	yum update
 	yum install -y wget
 	yum install -y git cmake gcc-c++ java-1.8.0-openjdk-devel systemtap systemtap-sdt-devel bison flex libtool ncurses-devel ant elfutils-libelf-devel rpm-build
@@ -83,22 +82,33 @@ Vagrant.configure("2") do |config|
 	cd /home/vagrant
 	mkdir bin
 	ln -sf /usr/bin/cmake3 /home/vagrant/bin/cmake
-	chown -R vagrant /home/vagrant/bin/cmake
+	chown -R vagrant /home/vagrant/bin
 	echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
 	
 	# configure astyle
-	cd /home/vagrant
-	mkdir tmp
-	wget https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz astyle.tar.gz
-	tar -xzf astyle.tar.gz
-	cd astyle
-	cmake .
-	make
-	make install
+	if [ ! -d /home/vagrant/astyle-install] then
+		cd /home/vagrant
+		mkdir astyle-install
+		cd astyle-install
+		wget https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -O astyle.tar.gz
+		tar -xzf astyle.tar.gz
+		cd astyle
+		cmake .
+		make
+		make install
+	fi
 	
-	cd ~/.git/hooks
+	cd /vagrant/.git/hooks
+	wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/pre-commit
+	chmod +x pre-commit
+	chown vagrant pre-commit
 	
+	cd /home/vagrant/bin
+	wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/indent
+	chmod +x indent
+	chown vagrant indent
 	
+	git config --global hooks.indent /home/vagrant/bin/indent
 	
 	cd /vagrant
 	
