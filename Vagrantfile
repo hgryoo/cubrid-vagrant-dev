@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
 	
 	# to build c++ 11
 	yum --enablerepo=extras install -y centos-release-scl
-	yum install -y devtoolset-6-gcc* epel-release
+	yum install -y devtoolset-8-gcc* epel-release
 	yum install -y cmake3
 	
 	cd /home/vagrant
@@ -86,7 +86,7 @@ Vagrant.configure("2") do |config|
 	echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
 	
 	# configure astyle
-	if [ ! -d /home/vagrant/astyle-install] then
+	if [ ! -d /home/vagrant/astyle-install]; then
 		cd /home/vagrant
 		mkdir astyle-install
 		cd astyle-install
