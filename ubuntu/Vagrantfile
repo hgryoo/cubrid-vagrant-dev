@@ -81,6 +81,8 @@ Vagrant.configure("2") do |config|
 	apt-get install -y gcc-8 g++-8
 	apt-get install -y cmake3
 	
+	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
+	
 	cd /home/vagrant
 	mkdir bin
 	ln -sf /usr/bin/cmake3 /home/vagrant/bin/cmake
