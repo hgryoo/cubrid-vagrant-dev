@@ -67,27 +67,23 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-  
-	add-apt-repository ppa:ubuntu-toolchain-r/test
-	apt-get update
-	apt-get install -y wget git build-essential
-	apt-get install -y systemtap systemtap-sdt-dev bison flex libtool cmake g++ libncurses5-dev ant libelf-dev automake
-	apt-get install -y openjdk-8-jdk
-	apt-get install -y vim ctags
 	
-	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+	apt-get update
+	yum install -y wget
+	yum install -y git cmake gcc-c++ java-1.8.0-openjdk-devel systemtap systemtap-sdt-devel bison flex libtool ncurses-devel ant elfutils-libelf-devel rpm-build
+	yum install -y vim gdb gdb-gdbserver ctags
 	
 	# to build c++ 11
-	apt-get install -y gcc-8 g++-8
-	apt-get install -y cmake3
-	
-	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
+	yum --enablerepo=extras install -y centos-release-scl
+	yum install -y devtoolset-8-gcc* epel-release
+	yum install -y cmake3
 	
 	cd /home/vagrant
-	mkdir -p bin
+	mkdir bin
 	ln -sf /usr/bin/cmake3 /home/vagrant/bin/cmake
 	chown -R vagrant /home/vagrant/bin
 	echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
+	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /home/vagrant/.bashrc
 	
 	# configure astyle
 	if [ ! -d /home/vagrant/astyle-install]; then
@@ -102,20 +98,19 @@ Vagrant.configure("2") do |config|
 		make install
 	fi
 	
-	mkdir -p /home/vagrant/.git/hooks
-	cd /home/vagrant/.git/hooks
-	wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/shell/pre-commit
+	cd /vagrant/.git/hooks
+	wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/pre-commit
 	chmod +x pre-commit
 	chown vagrant pre-commit
 	
 	cd /home/vagrant/bin
-	wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/shell/indent
+	wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/indent
 	chmod +x indent
 	chown vagrant indent
 	
 	git config --global hooks.indent /home/vagrant/bin/indent
 	
-	cd /home/vagrant
+	cd /vagrant
 	
 	if [ ! -d cubrid ]; then
 		git clone --recurse-submodules https://github.com/hgryoo/cubrid.git hgryoo_cubrid
