@@ -69,12 +69,15 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
 	
 	apt-get update
-	apt-get install -y wget
+	add-apt-repository ppa:ubuntu-toolchain-r/test
+	
+	apt-get install -y wget build-essential
 	apt-get install -y git cmake systemtap systemtap-sdt-dev bison flex libtool libncurses5-dev ant libelf-dev automake openjdk-8-jdk rpm
 	apt-get install -y vim gdb gdb-gdbserver ctags
 	
 	# to build c++ 11
-	apt-get install -y gcc-8 g++-8
+	apt-get update
+	apt-get install -y g++-8
 	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 	
 	cd /home/vagrant
@@ -88,7 +91,7 @@ Vagrant.configure("2") do |config|
 		cd /home/vagrant
 		mkdir astyle-install
 		cd astyle-install
-		wget https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -O astyle.tar.gz
+		wget -q https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -O astyle.tar.gz
 		tar -xzf astyle.tar.gz
 		cd astyle
 		cmake .
@@ -99,12 +102,12 @@ Vagrant.configure("2") do |config|
 	mkdir -p /home/vagrant/.git/hooks
 	chown -R vagrant /home/vagrant/.git
 	cd /home/vagrant/.git/hooks
-	wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/shell/pre-commit
+	wget -q https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/shell/pre-commit
 	chmod +x pre-commit
 	chown vagrant pre-commit
 	
 	cd /home/vagrant/bin
-	wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/shell/indent
+	wget -q https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/shell/indent
 	chmod +x indent
 	chown vagrant indent
 	
