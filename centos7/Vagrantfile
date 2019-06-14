@@ -83,6 +83,7 @@ Vagrant.configure("2") do |config|
 	ln -sf /usr/bin/cmake3 /home/vagrant/bin/cmake
 	chown -R vagrant /home/vagrant/bin
 	echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
+	echo 'source scl_source enable devtoolset-8' >> /home/vagrant/.bash_profile
 	
 	# configure astyle
 	if [ ! -d /home/vagrant/astyle-install]; then
