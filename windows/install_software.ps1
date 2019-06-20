@@ -18,11 +18,11 @@ Start-Process -FilePath "C:\vagrant\$($exe.Name)" -ArgumentList (
 '--norestart'
 ) -Wait
 
-# refer
+# please refer module ids of Visual Studio 2017 :
 # https://docs.microsoft.com/ko-kr/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2017
 
-#$exe = Get-ChildItem -Path C:\vagrant\jdk-7*.exe -File | Select-Object Name
-#Start-Process -FilePath "C:\vagrant\$($exe.Name)" -ArgumentList (
-#'/quiet /qn /norestart /l* jdk7_install.log'
-#) -Wait -Passthru
-
+# If you need jdk-7
+# $exe = Get-ChildItem -Path C:\vagrant\jdk-7*.exe -File | Select-Object Name
+# Start-Process -FilePath "C:\vagrant\$($exe.Name)" -ArgumentList (
+# '/quiet /qn /norestart /l* jdk7_install.log'
+# ) -Wait -Passthru

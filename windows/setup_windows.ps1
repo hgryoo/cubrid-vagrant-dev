@@ -15,7 +15,5 @@ if (!(Test-Path /Users/vagrant/.ssh)) {
  mkdir C:\Users\vagrant\.ssh
 }
 
-Copy-Item "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\*" -Destination "C:\Program Files (x86)\Common Files\Merge Modules"
-
 # Copy ssh keys
 # cp C:\shares\.ssh\* C:\Users\vagrant\.ssh\
