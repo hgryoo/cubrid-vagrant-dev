@@ -1,4 +1,4 @@
-# cubrid-vagrant-dev
+# Development Environment for CUBRID on Vagrant
 Development Environment for CUBRID DBMS based on Vagrant
 
 ## Getting Started
