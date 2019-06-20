@@ -6,10 +6,10 @@ if (!(Test-Path $ChocoInstallPath)) {
 }
 
 chocolatey feature enable -n=allowGlobalConfirmation
-choco install jdk8 --force
-choco install cmake winflexbison wixtoolset
-choco install ant
-choco install git
+choco install jdk8 --force -y
+choco install cmake winflexbison wixtoolset -y
+choco install ant -y
+choco install git -y
 
 if (!(Test-Path /Users/vagrant/.ssh)) {
  mkdir C:\Users\vagrant\.ssh
