@@ -12,11 +12,12 @@ Start-Process -FilePath "C:\vagrant\$($exe.Name)" -ArgumentList (
 '--add Microsoft.Component.VC.Runtime.UCRTSDK',
 '--add Microsoft.VisualStudio.Component.VC.ATLMFC',
 '--add Microsoft.VisualStudio.Component.VC.CLI.Support',
-'--lang en-US',
 '--wait',
 '--passive',
 '--norestart'
 ) -Wait
+
+Copy-Item "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\*" -Destination "C:\Program Files (x86)\Common Files\Merge Modules"
 
 # please refer module ids of Visual Studio 2017 :
 # https://docs.microsoft.com/ko-kr/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2017
