@@ -10,3 +10,12 @@ if [ ! -d myenv ]; then
 	git clone https://github.com/hgryoo/MyCentOSEnv myenv
 	chown -R vagrant myenv
 fi
+
+# Build
+
+if [ ! -d build ]; then
+    mkdir build
+    cd cubrid
+   ./build.sh -b ~/build # -m debug  for debugging
+fi 
+
