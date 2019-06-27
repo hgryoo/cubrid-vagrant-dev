@@ -6,7 +6,7 @@ gdb gdb-gdbserver \
 ctags
 
 # configure astyle
-if [ ! -d /home/vagrant/astyle-install]; then
+if [ ! -d /home/vagrant/astyle-install ]; then
 	cd /home/vagrant
 	mkdir astyle-install
 	cd astyle-install
