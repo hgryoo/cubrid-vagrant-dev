@@ -1,7 +1,6 @@
 yum update
 
-yum install -y gcc-c++ \
-cmake \
+yum install -y gcc-c++-4.4.7 \
 libtool \
 java-1.8.0-openjdk-devel \
 texinfo \
