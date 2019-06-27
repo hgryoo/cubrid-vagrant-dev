@@ -1,19 +1,22 @@
 yum update
 
+yum install -y epel-release
 yum install -y wget \
 vim \
 gdb gdb-gdbserver \
+cmake3 \
 ctags
 
+
 # configure astyle
-if [ ! -d /home/vagrant/astyle-install]; then
+if [ ! -d /home/vagrant/astyle-install ]; then
 	cd /home/vagrant
 	mkdir astyle-install
 	cd astyle-install
 	wget https://jaist.dl.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -O astyle.tar.gz
 	tar -xzf astyle.tar.gz
 	cd astyle
-	cmake .
+	cmake3 .
 	make
 	make install
 fi

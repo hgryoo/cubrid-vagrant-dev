@@ -1,27 +1,17 @@
 yum update
 
-yum install -y git \
-cmake \
-gcc-c++ \
-java-1.8.0-openjdk-devel \
-systemtap \
-systemtap-sdt-devel \
-bison \
-flex \
+yum install -y gcc-c++-4.4.7 \
 libtool \
-ncurses-devel \
-ant \
+java-1.8.0-openjdk-devel \
+texinfo \
 elfutils-libelf-devel \
-rpm-build
+libgpg-error-devel \
+ncurses-devel \
+flex \
+ant 
 
-# to build c++11
-yum --enablerepo=extras install -y centos-release-scl
-yum install -y devtoolset-8-gcc* epel-release
-yum install -y cmake3
+# install git 2.X for git clone from https (SSL)
+yum install -y http://opensource.wandisco.com/centos/6/git/x86_64/wandisco-git-release-6-1.noarch.rpm
+yum install -y git
 
-cd /home/vagrant
-mkdir -p bin
-ln -sf /usr/bin/cmake3 /home/vagrant/bin/cmake
-chown -R vagrant /home/vagrant/bin
-echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
-echo 'source scl_source enable devtoolset-8' >> /home/vagrant/.bash_profile
+echo 'export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk.x86_64' >> /home/vagrant/.bashrc
