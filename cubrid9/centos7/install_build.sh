@@ -23,7 +23,7 @@ compat-libgmp-4.3.1-1.sl7.x86_64.rpm compat-libmpfr-2.4.1-1.sl7.x86_64.rpm
 
 yum --enablerepo=extras install -y centos-release-scl
 yum install -y devtoolset-2-gcc* devtoolset-2-binutils --nogpgcheck
-yum install -y epel-release gcc-c++ boost-devel
+yum install -y gcc-c++ boost-devel
 
 cd /home/vagrant
 mkdir -p bin
