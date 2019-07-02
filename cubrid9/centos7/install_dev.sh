@@ -19,7 +19,6 @@ if [ ! -d /home/vagrant/astyle-install]; then
 	make
 	make install
 fi
-D:\Sources\cubrid-vagrant-dev
 
 # configure pre-commit
 mkdir -p /home/vagrant/.git/hooks
