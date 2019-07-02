@@ -1,27 +1,31 @@
 yum update
 
 yum install -y git \
-cmake \
-gcc-c++ \
-java-1.8.0-openjdk-devel \
-systemtap \
-systemtap-sdt-devel \
-bison \
-flex \
 libtool \
-ncurses-devel \
-ant \
+java-1.8.0-openjdk-devel \
+texinfo \
 elfutils-libelf-devel \
-rpm-build
+libgpg-error-devel \
+ncurses-devel \
+flex \
+ant 
 
-# to build c++11
-yum --enablerepo=extras install -y centos-release-scl
-yum install -y devtoolset-8-gcc* epel-release
-yum install -y cmake3
+wget -O /etc/yum.repos.d/slc6-devtoolset.repo http://linuxsoft.cern.ch/cern/devtoolset/slc6-devtoolset.repo
+
+cd /home/vagrant
+
+wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/cubrid9/centos7/compat-libgmp-4.3.1-1.sl7.x86_64.rpm
+wget https://github.com/hgryoo/cubrid-vagrant-dev/raw/master/cubrid9/centos7/compat-libmpfr-2.4.1-1.sl7.x86_64.rpm
+
+yum localinstall -y --nogpgcheck \
+compat-libgmp-4.3.1-1.sl7.x86_64.rpm compat-libmpfr-2.4.1-1.sl7.x86_64.rpm 
+
+yum install -y centos-release-scl
+yum install -y devtoolset-1.1-gcc-c++ --nogpgcheck
 
 cd /home/vagrant
 mkdir -p bin
-ln -sf /usr/bin/cmake3 /home/vagrant/bin/cmake
 chown -R vagrant /home/vagrant/bin
 echo 'export PATH=/home/vagrant/bin:$PATH' >> /home/vagrant/.bashrc
-echo 'source scl_source enable devtoolset-8' >> /home/vagrant/.bash_profile
+echo 'export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk' >> /home/vagrant/.bashrc
+echo 'source scl_source enable devtoolset-1.1' >> /home/vagrant/.bash_profile
